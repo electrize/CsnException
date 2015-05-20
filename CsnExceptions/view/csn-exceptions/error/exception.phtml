@@ -1,0 +1,91 @@
+<?php if (isset($display_exceptions) && $display_exceptions): ?>
+<hr/>
+<h1 class="center underline text-red"><?php echo 'An error occurred' ?></h1>
+
+<?php if(isset($exception) && $exception instanceof Exception): ?>
+
+<dl>
+    <dt class="text-light-gray"><?php echo 'Error Type' ?>:</dt>
+    <dd>
+        <pre class="prettyprint linenums"><?php echo $type; ?></pre>
+    </dd>
+    <dt class="text-light-gray"><?php echo 'File' ?>:</dt>
+    <dd>
+        <pre class="prettyprint linenums"><?php echo $exception->getFile() ?>:<?php echo $exception->getLine() ?></pre>
+    </dd>
+    <dt class="text-light-gray"><?php echo 'Message' ?>:</dt>
+    <dd>
+        <pre class="prettyprint linenums"><?php echo $exception->getMessage() ?></pre>
+    </dd>
+    <dt class="text-light-gray"><?php echo 'Stack trace' ?>:</dt>
+    <dd>
+        <div id="accordion">
+          <div class="panel back-red" style="cursor:pointer; border: 2px solid #CCCCCC;">
+
+              <a data-toggle="collapse" data-target="#collapseOne" href="#collapseOne" >
+                    <h1 class="text-center" style="margin: 0; background: #BB0002; color: #ccc;"><span class="glyphicon glyphicon-eye-open"></span></h1>
+              </a>
+
+            <div id="collapseOne" class="panel-collapse collapse">
+                <div class="panel-body">
+                    <pre class="prettyprint linenums"><?php echo $exception->getTraceAsString() ?></pre>
+                </div>
+            </div>
+          </div>
+        </div>
+    </dd>
+</dl>
+<h3 class="text-light-gray"><?php echo 'Additional information' ?>:</h3>
+<h3 class="center text-gray"><?php echo get_class($exception); ?></h3>
+<?php
+    $e = $exception->getPrevious();
+    if ($e) :
+?>
+<br/><hr/>
+<h1 class="text-yellow underline center top-buffer-20"><?php echo 'Previous exceptions' ?>:</h1>
+
+    <?php while($e) : ?>
+        <dl>
+            <dt class="text-light-gray"><?php echo 'File' ?>:</dt>
+            <dd>
+                <pre class="prettyprint linenums"><?php echo $e->getFile() ?>:<?php echo $e->getLine() ?></pre>
+            </dd>
+            <dt class="text-light-gray"><?php echo 'Message' ?>:</dt>
+            <dd>
+                <pre class="prettyprint linenums"><?php echo $e->getMessage() ?></pre>
+            </dd>
+            <dt class="text-light-gray"><?php echo 'Stack trace' ?>:</dt>
+            <dd>
+
+                <div id="accordion2">
+                  <div class="panel back-yellow" style="cursor:pointer">
+
+                      <div class="h2 small text-yellow center" data-toggle="collapse" data-target="#collapseOne2" href="#collapseOne2" >
+                            <span class="glyphicon glyphicon-eye-open"></span>
+                      </div>
+
+                    <div id="collapseOne2" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <pre class="prettyprint linenums"><?php echo $e->getTraceAsString() ?></pre>
+                        </div>
+                    </div>
+                  </div>
+                </div>
+            </dd>
+        </dl>
+        <h3 class="text-light-gray"><?php echo 'Additional information' ?>:</h3>
+        <h3 class="center text-gray"><?php echo get_class($exception); ?></h3>
+    <?php
+        $e = $e->getPrevious();
+        endwhile;
+    ?>
+
+<?php endif; ?>
+
+<?php else: ?>
+
+<h3><?php echo 'No Exception available' ?></h3>
+
+<?php endif ?>
+
+<?php endif ?>

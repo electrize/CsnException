@@ -1,0 +1,27 @@
+<div class="container">
+    <div class="row top-buffer bottom-buffer">
+        <div class="col-sm-12">
+            <div class="circle shape-border back-red">
+                <div class="shape-inner">
+                    <div class="shape-text text-red">
+                        <span class="glyphicon glyphicon-remove"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row top-buffer bottom-buffer">
+        <h2 class="text-center gap-large">
+        <?php 
+            if(!isset($this->errorMessage)) {
+                echo "Something went wrong! Please, try again later.";
+            }
+            echo $this->errorMessage 
+        ?>
+        </h2>
+    </div>
+<?php 
+	
+echo $this->partial('csn-exceptions/error/exception_template', array('display_exceptions' =>  $this->display_exceptions, 'exception' => $this->exception, 'message' => $this->exception->getMessage(), 'type' => $this->type)); ?>
+</div>
+<div class="gap"></div>
